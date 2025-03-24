@@ -20,7 +20,7 @@ int main()
         char temp=getchar();
         if(temp==' ')continue;
         else if(temp=='\n')break;    //循环读入队列值
-        else q1[++tt1]=temp-'1'+1;
+        else q1[++tt1]=temp-'1'+1,cnt1++;
     }
 
 
@@ -28,23 +28,23 @@ int main()
     {
         char temp=getchar();
         if(temp==' ')continue;
-        else if(temp=='\n')break;
-        else q1[++tt1]=temp-'1'+1;
+        else if(temp=='\n')break;  //同上，维护队列2
+        else q2[++tt2]=temp-'1'+1,cnt2++;
     }
 
     while(hh1<=cnt1-1&&hh2<=cnt2-1)
     {
-        if(q1[hh1]<=q2[hh2])stk[++tt]=q1[hh1++];
+        if(q1[hh1]>=q2[hh2])stk[++tt]=q1[hh1++];    //归并排序算法
         else stk[++tt]=q2[hh2++];
     }
 
 
-    while(hh1<=cnt1-1)stk[++tt]=q1[hh1++];
-    while(hh2<=cnt2-1)stk[++tt]=q2[hh2++];
+    while(hh1<=cnt1-1)stk[++tt]=q1[hh1++];  //处理剩余项
+    while(hh2<=cnt2-1)stk[++tt]=q2[hh2++];  //处理剩余项
 
     while(tt)
     {
-        printf("%d ",stk[tt--]);
+        printf("%d ",stk[tt--]);    //打印栈值
     }
     printf("\n");
 
