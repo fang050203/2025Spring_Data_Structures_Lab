@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define N 100010;     //定义一个比较大的空间
+#define N 100010     //定义一个比较大的空间
 
 int q1[N];
 int hh1=0,tt1=-1;    //定义轨道1队列
