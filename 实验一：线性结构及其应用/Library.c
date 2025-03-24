@@ -68,7 +68,7 @@ int DeleteBook(Node **head,char bookid[])
 {
     if(*(head))
     {
-
+        
     }
 }
 
@@ -102,7 +102,10 @@ Node *FindBook (Node *head,char bookid[])
     }
 }
 //=======================6.遍历并输出所有图书信息==================
+void TraverseList(Node *head)
+{
 
+}
 
 int main(
     Node *head=NULL;
