@@ -19,12 +19,36 @@ typedef struct {
 
 typedef struct Node{      //图书节点链表定义
     Book book;      //定义图书信息
-    Node *next;    //只向下一个节点的定义
+    struct Node *next;    //只向下一个节点的定义
 }Node;
 
 
 
 //==========================定义函数===========================
+
+
+//=======================5.根据书号查找图书信息==================
+Node *my_FindBook (Node *head,char bookid[])
+{
+    if(head)
+    {
+        Node *temp=head;  //定义临时头结点，用于查找
+        while((strcmp(temp->book.bookID,bookid)!=0)&&temp)temp=temp->next;   //查找直到找到与bookid匹配的节点,或者查找到末尾节点停止循环
+        if(temp)   //当temp->next不为空
+        {
+            return temp;   //查找到节点，直接返回
+        }
+        else
+        {
+            return NULL;  //没找到节点，返回NULL
+        }
+    }
+    else
+    {
+        return NULL;    //头结点为空，直接返回NULL
+    }
+}
+
 
 
 
@@ -44,6 +68,8 @@ Node* CreateNode(Book book)
         return new_node;    //返回指针
     }
 }
+
+
 //=======================2.在链表尾部插入图书信息==================
 
 void InsertBook(Node **head,Book book)
@@ -52,7 +78,7 @@ void InsertBook(Node **head,Book book)
     if(*(head))    //如果链表不空
     {
         Node* temp=*head;  //创建临时头指针
-        while(temp->next!=NULL)temp=temp->next;//找到末尾节点
+        while(temp->next)temp=temp->next;//找到末尾节点
         temp->next=new_node;    //在尾部插入节点
     }
     else
@@ -68,8 +94,37 @@ int DeleteBook(Node **head,char bookid[])
 {
     if(*(head))
     {
-        
+        Node *temp =NULL;  
+        temp =my_FindBook(*head,bookid);   //找到图书信息节点
+        if(!temp)
+        {
+            return 0;
+        }
+        else
+        {
+            if(temp==*head)
+            {
+                printf("图书%s删除成功！\n",temp->book.bookID);
+                *head=(*head)->next;
+                free(temp);
+                return 1;
+            }
+            else
+            {
+                printf("图书%s删除成功！\n",temp->book.bookID);
+                Node *t=*head;  //定义临时头结点
+                while(t->next!=temp)t=t->next;
+                t->next=temp->next;
+                free(temp);
+                return 1;
+            }
+        }
     }
+    else
+    {
+        return 0;
+    }
+
 }
 
 
@@ -78,7 +133,21 @@ int DeleteBook(Node **head,char bookid[])
 
 int UpdateStock(Node *head,char bookid[],int newStock)
 {
-
+    Node *temp=head;   //定义临时头结点
+    while(temp)
+    {
+        if(!(strcmp(temp->book.bookID,bookid)))
+        {
+            temp->book.stock=newStock;
+            printf("图书%s的库存数量已修改为%d！\n",temp->book.bookID,temp->book.stock);
+            return 1;
+        }
+        else
+        {
+            temp=temp->next;
+        }
+    }
+    return 0;
 }
 //=======================5.根据书号查找图书信息==================
 Node *FindBook (Node *head,char bookid[])
@@ -86,9 +155,12 @@ Node *FindBook (Node *head,char bookid[])
     if(head)
     {
         Node *temp=head;  //定义临时头结点，用于查找
-        while(strcmp(temp->book.bookID,bookid)&&temp)temp=temp->next;   //查找直到找到与bookid匹配的节点,或者查找到末尾节点停止循环
+        while(temp&&(strcmp(temp->book.bookID,bookid)!=0))temp=temp->next;   //查找直到找到与bookid匹配的节点,或者查找到末尾节点停止循环
         if(temp)   //当temp->next不为空
         {
+            printf("查找的图书信息：\n");
+            printf("书号：%s,书名：%s,作者：%s,库存：%d",temp->book.bookID,temp->book.title,temp->book.author,temp->book.stock);
+            printf("\n");  //换行
             return temp;   //查找到节点，直接返回
         }
         else
@@ -104,10 +176,21 @@ Node *FindBook (Node *head,char bookid[])
 //=======================6.遍历并输出所有图书信息==================
 void TraverseList(Node *head)
 {
-
+    if(head)
+    {
+        Node *temp=head;  //定义临时头结点
+        printf("图书列表：\n");
+        while(temp)
+        {
+            printf("书号：%s,书名：%s,作者：%s,库存：%d",temp->book.bookID,temp->book.title,temp->book.author,temp->book.stock);
+            printf("\n");
+            temp=temp->next;
+        }
+    }
 }
 
-int main(
+
+int main(){
     Node *head = NULL; // 链表头节点
     char bookId_find[4], bookId_update[4], bookId_delete[4];
     int num;
@@ -137,4 +220,4 @@ int main(
     TraverseList(head);
 
     return 0;
-)
+}

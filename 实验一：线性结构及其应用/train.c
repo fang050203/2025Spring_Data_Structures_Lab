@@ -17,19 +17,20 @@ int main()
 {
     while(1)
     {
-        char temp=getchar();
-        if(temp==' ')continue;
-        else if(temp=='\n')break;    //循环读入队列值
-        else q1[++tt1]=temp-'1'+1,cnt1++;
+        scanf("%d",&q1[++tt1]);
+        cnt1++;
+        char ch=getchar();
+        if(ch==' ')continue;
+        else if(ch=='\n')break;   
+
     }
-
-
     while(1)
     {
-        char temp=getchar();
-        if(temp==' ')continue;
-        else if(temp=='\n')break;  //同上，维护队列2
-        else q2[++tt2]=temp-'1'+1,cnt2++;
+        scanf("%d",&q2[++tt2]);
+        cnt2++;
+        char ch=getchar();
+        if(ch==' ')continue;
+        else if(ch=='\n')break;  
     }
 
     while(hh1<=cnt1-1&&hh2<=cnt2-1)
