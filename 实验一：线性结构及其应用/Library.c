@@ -17,7 +17,7 @@ typedef struct {
 //===============定义链表节点=================
 
 
-typedef struct{      //图书节点链表定义
+typedef struct Node{      //图书节点链表定义
     Book book;      //定义图书信息
     Node *next;    //只向下一个节点的定义
 }Node;
@@ -108,6 +108,33 @@ void TraverseList(Node *head)
 }
 
 int main(
-    Node *head=NULL;
+    Node *head = NULL; // 链表头节点
+    char bookId_find[4], bookId_update[4], bookId_delete[4];
+    int num;
+    scanf("%s", bookId_find);
+    scanf("%s", bookId_update);
+    scanf("%d", &num);
+    scanf("%s", bookId_delete);
+
+    // 添加图书信息
+    Book book1 = {"001", "C程序设计", "谭浩强", 10};
+    Book book2 = {"002", "数据结构", "严蔚敏", 5};
+    Book book3 = {"003", "算法导论", "Thomas H. Cormen", 3};
+    InsertBook(&head, book1);
+    InsertBook(&head, book2);
+    InsertBook(&head, book3);
+
+    // 查找图书信息
+    FindBook(head, bookId_find);
+
+    // 修改图书库存数量
+    UpdateStock(head, bookId_update, num);
+
+    // 删除图书信息
+    DeleteBook(&head, bookId_delete);
+
+    // 遍历输出图书列表
+    TraverseList(head);
+
     return 0;
 )
